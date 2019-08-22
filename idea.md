@@ -6,6 +6,12 @@
     - file name is <id>_<tags>.<ext>
 
 - read
+  - get file path
+    - input: tags
+    - output: list of file paths(mutch all)
+  - get file path
+    - input: id
+      output: file path
 
 - update
   - tag update
