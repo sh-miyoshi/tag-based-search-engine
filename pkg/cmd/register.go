@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/sh-miyoshi/tag-based-search-engine/pkg/engine"
 	"github.com/spf13/cobra"
 )
 
@@ -19,7 +20,10 @@ var registerCmd = &cobra.Command{
 	Short: "Register file to database",
 	Long:  `Register file to database`,
 	Run: func(cmd *cobra.Command, args []string) {
-
+		if err := engine.Register(registerFile, dbFile); err != nil {
+			fmt.Printf("Failed to register file: %s Error: %v", registerFile, err)
+			return
+		}
 		fmt.Println("Succeeded")
 	},
 }
