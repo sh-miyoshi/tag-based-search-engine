@@ -6,6 +6,8 @@ import (
 )
 
 func init() {
+	updateCmd.Flags().StringSlice("tags", []string{}, "a list of tags for assign/remove")
+
 	rootCmd.AddCommand(updateCmd)
 }
 

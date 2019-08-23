@@ -6,6 +6,14 @@ import (
 	"os"
 )
 
+var dbFile string
+
+func init() {
+	const defaultDBFile = "database.csv"
+
+	rootCmd.PersistentFlags().StringVar(&dbFile, "database", defaultDBFile, "The file path of Database")
+}
+
 var rootCmd = &cobra.Command{
 	Use:   "tsearch",
 	Short: "tsearch is a command line tool for tag-based-search-engine",
