@@ -9,7 +9,7 @@ import (
 var dbFile string
 
 func init() {
-	const defaultDBFile = "database.csv"
+	const defaultDBFile = "database.json"
 
 	rootCmd.PersistentFlags().StringVar(&dbFile, "database", defaultDBFile, "The file path of Database")
 }

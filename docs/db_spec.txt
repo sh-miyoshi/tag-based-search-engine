@@ -1,4 +1,11 @@
 # DBの構造に関して
 
-csv形式で保存
-id, tags, filePath
+json形式で保存
+[
+	{
+		"id": "",
+		"tags": ["",...],
+		"filePath": ""
+	},
+	...
+]

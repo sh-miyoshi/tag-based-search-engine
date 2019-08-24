@@ -1,11 +1,10 @@
 package engine
 
 import (
-	"encoding/csv"
+	"encoding/json"
 	"fmt"
 	"github.com/google/uuid"
-	"io"
-	"os"
+	"io/ioutil"
 )
 
 // Register method register a file to database if not exists
@@ -15,35 +14,32 @@ func Register(registerFile string, databaseFile string) error {
 	}
 
 	// Open DB File
-	fp, err := os.OpenFile(databaseFile, os.O_RDWR, 0644)
+	raw, err := ioutil.ReadFile(databaseFile)
 	if err != nil {
 		return err
 	}
-	defer fp.Close()
 
-	reader := csv.NewReader(fp)
-	reader.Comment = '#'
+	var data []object
+	json.Unmarshal(raw, &data)
 
-	// If registerFile is already exists in Database, return error
-	for {
-		line, err := reader.Read()
-		if err != nil {
-			if err == io.EOF {
-				break
-			} else {
-				// Unexpected error occured
-				return err
-			}
-		}
-
-		if line[2] == registerFile {
+	for _, d := range data {
+		if registerFile == d.FilePath {
 			return fmt.Errorf("File is already exists")
 		}
 	}
 
-	// Register File to Database
-	id := uuid.New().String()
-	_, err = fp.WriteString(fmt.Sprintf("%s,,%s\n", id, registerFile))
+	data = append(data, object{
+		ID:       uuid.New().String(),
+		Tags:     []string{},
+		FilePath: registerFile,
+	})
 
-	return err
+	// Update file
+	updated, err := json.MarshalIndent(data, "", "    ")
+	if err != nil {
+		return err
+	}
+
+	ioutil.WriteFile(databaseFile, updated, 0644)
+	return nil
 }
