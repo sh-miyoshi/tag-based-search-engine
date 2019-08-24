@@ -7,9 +7,13 @@ import (
 )
 
 func TestRegister(t *testing.T) {
-	dbFile := "unexists_file.csv"
-	err := Register("regiter_file.txt", dbFile)
-	if err == nil {
+	dbFile := ""
+	if err := Register("regiter_file.txt", dbFile); err == nil {
+		t.Errorf("Expect error when empty database file, but got nil")
+	}
+
+	dbFile = "unexists_file.csv"
+	if err := Register("regiter_file.txt", dbFile); err == nil {
 		t.Errorf("Expect error when read unexists database file, but got nil")
 	}
 

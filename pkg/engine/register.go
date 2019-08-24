@@ -10,8 +10,8 @@ import (
 
 // Register method register a file to database if not exists
 func Register(registerFile string, databaseFile string) error {
-	if registerFile == "" || databaseFile == "" {
-		return fmt.Errorf("Please input registerFile and databaseFile")
+	if registerFile == "" {
+		return fmt.Errorf("register file path is empty")
 	}
 
 	// Open DB File
