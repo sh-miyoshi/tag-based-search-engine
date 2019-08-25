@@ -1,10 +1,8 @@
 package engine
 
 import (
-	"encoding/csv"
-	"io"
-	"os"
-	"strings"
+	"encoding/json"
+	"io/ioutil"
 )
 
 // Get method return a list of file which matches to tags
@@ -18,42 +16,30 @@ func Get(tags []string, databaseFile string) ([]string, error) {
 	}
 
 	// Open DB File
-	fp, err := os.OpenFile(databaseFile, os.O_RDWR, 0644)
+	raw, err := ioutil.ReadFile(databaseFile)
 	if err != nil {
 		return []string{}, err
 	}
-	defer fp.Close()
 
-	reader := csv.NewReader(fp)
-	reader.Comment = '#'
+	var data []object
+	json.Unmarshal(raw, &data)
 
 	fileList := []string{}
 
-	for {
-		line, err := reader.Read()
-		if err != nil {
-			if err == io.EOF {
-				break
-			} else {
-				// Unexpected error occured
-				return []string{}, err
-			}
-		}
-
+	for _, d := range data {
 		if len(tags) == 0 { // tags are empty
-			fileList = append(fileList, line[2])
+			fileList = append(fileList, d.FilePath)
 		} else {
 			// append result if tags in data contains all of request tags
-			dbTags := strings.Split(line[1], ":")
 			matched := true
 			for _, tag := range tags {
-				if !contains(dbTags, tag) {
+				if !contains(d.Tags, tag) {
 					matched = false
 					break
 				}
 			}
 			if matched {
-				fileList = append(fileList, line[2])
+				fileList = append(fileList, d.FilePath)
 			}
 		}
 	}
