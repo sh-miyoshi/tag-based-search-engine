@@ -8,13 +8,6 @@ import (
 // Get method return a list of file which matches to tags
 //   If tags is empty, return all file list
 func Get(tags []string, databaseFile string) ([]string, error) {
-	// Validate tags
-	for _, tag := range tags {
-		if err := tagPermit(tag); err != nil {
-			return []string{}, err
-		}
-	}
-
 	// Open DB File
 	raw, err := ioutil.ReadFile(databaseFile)
 	if err != nil {
