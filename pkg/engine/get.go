@@ -2,27 +2,10 @@ package engine
 
 import (
 	"encoding/csv"
-	"fmt"
 	"io"
 	"os"
 	"strings"
 )
-
-func tagPermit(tag string) error {
-	if tag == ":" || tag == "," {
-		return fmt.Errorf("%s is not permitted as tag", tag)
-	}
-	return nil
-}
-
-func contains(list []string, find string) bool {
-	for _, d := range list {
-		if d == find {
-			return true
-		}
-	}
-	return false
-}
 
 // Get method return a list of file which matches to tags
 //   If tags is empty, return all file list

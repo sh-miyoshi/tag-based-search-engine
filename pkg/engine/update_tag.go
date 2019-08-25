@@ -1,10 +1,9 @@
 package engine
 
 import (
-	"encoding/csv"
+	"encoding/json"
 	"fmt"
-	"io"
-	"os"
+	"io/ioutil"
 )
 
 // Assign method assign tags to targetFile
@@ -14,45 +13,33 @@ func Assign(targetFile string, tags []string, databaseFile string) error {
 	}
 
 	// Open DB File
-	fp, err := os.OpenFile(databaseFile, os.O_RDWR, 0644)
+	raw, err := ioutil.ReadFile(databaseFile)
 	if err != nil {
 		return err
 	}
-	defer fp.Close()
 
-	reader := csv.NewReader(fp)
-	reader.Comment = '#'
+	var data []object
+	json.Unmarshal(raw, &data)
 
-	var records [][]string
-
-	// If registerFile is already exists in Database, return error
-	for {
-		line, err := reader.Read()
-		if err != nil {
-			if err == io.EOF {
-				break
-			} else {
-				// Unexpected error occured
-				return err
+	for index, d := range data {
+		if d.FilePath == targetFile {
+			// Update Tags
+			for _, tag := range tags {
+				if !contains(data[index].Tags, tag) {
+					data[index].Tags = append(data[index].Tags, tag)
+				}
 			}
 		}
-
-		if line[2] == targetFile {
-			// TODO(udpate tags)
-		}
-
-		records = append(records, line)
 	}
 
-	// Remove All data at first
-	fp.Truncate(0)
-	fp.Seek(0, 0)
+	// Update file
+	updated, err := json.MarshalIndent(data, "", "    ")
+	if err != nil {
+		return err
+	}
 
-	// Write updated data
-	writer := csv.NewWriter(fp)
-	writer.WriteAll(records)
-
-	return err
+	ioutil.WriteFile(databaseFile, updated, 0644)
+	return nil
 }
 
 // Delete method delete tags from targetFile
