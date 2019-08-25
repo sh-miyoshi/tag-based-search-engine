@@ -19,6 +19,7 @@ var rootCmd = &cobra.Command{
 	Short: "tsearch is a command line tool for tag-based-search-engine",
 	Long:  "tsearch is a command line tool for tag-based-search-engine",
 	Run: func(cmd *cobra.Command, args []string) {
+		cmd.Help()
 	},
 }
 

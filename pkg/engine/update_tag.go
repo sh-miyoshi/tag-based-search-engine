@@ -6,8 +6,8 @@ import (
 	"io/ioutil"
 )
 
-// Assign method assign tags to targetFile
-func Assign(targetFile string, tags []string, databaseFile string) error {
+// AssignTag method assign tags to targetFile
+func AssignTag(targetFile string, tags []string, databaseFile string) error {
 	if targetFile == "" {
 		return fmt.Errorf("target file path is empty")
 	}
@@ -42,8 +42,8 @@ func Assign(targetFile string, tags []string, databaseFile string) error {
 	return nil
 }
 
-// Delete method delete tags from targetFile
-func Delete(targetFile string, tags []string, databaseFile string) error {
+// DeleteTag method delete tags from targetFile
+func DeleteTag(targetFile string, tags []string, databaseFile string) error {
 	// TODO
 	return nil
 }
