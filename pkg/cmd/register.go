@@ -15,7 +15,7 @@ func init() {
 	registerFileCmd.MarkFlagRequired("name")
 
 	registerTagCmd.Flags().StringVarP(&updateTargetFile, "name", "n", "", "a name of register file")
-	registerTagCmd.Flags().StringSliceVar(&updateTags, "tags", []string{}, "a list of tags for assign/remove")
+	registerTagCmd.Flags().StringSliceVar(&updateTags, "tags", []string{}, "a list of tags to register")
 	registerTagCmd.MarkFlagRequired("name")
 	registerTagCmd.MarkFlagRequired("tags")
 
