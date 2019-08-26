@@ -40,7 +40,7 @@ var registerFileCmd = &cobra.Command{
 	Short: "Register file to database",
 	Long:  `Register file to database`,
 	Run: func(cmd *cobra.Command, args []string) {
-		if err := engine.Register(registerFile, dbFile); err != nil {
+		if err := engine.RegisterFile(registerFile, dbFile); err != nil {
 			fmt.Printf("Failed to register file: %s Error: %v", registerFile, err)
 			return
 		}

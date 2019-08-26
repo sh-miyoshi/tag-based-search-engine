@@ -7,8 +7,8 @@ import (
 	"io/ioutil"
 )
 
-// Register method register a file to database if not exists
-func Register(registerFile string, databaseFile string) error {
+// RegisterFile method register a file to database if not exists
+func RegisterFile(registerFile string, databaseFile string) error {
 	if registerFile == "" {
 		return fmt.Errorf("register file path is empty")
 	}
@@ -43,3 +43,5 @@ func Register(registerFile string, databaseFile string) error {
 	ioutil.WriteFile(databaseFile, updated, 0644)
 	return nil
 }
+
+// TODO(Delete File from database)
