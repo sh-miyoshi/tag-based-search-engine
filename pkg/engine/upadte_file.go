@@ -44,4 +44,8 @@ func RegisterFile(registerFile string, databaseFile string) error {
 	return nil
 }
 
-// TODO(Delete File from database)
+// DeleteFile method delete a file to database if not exists
+func DeleteFile(deleteFile string, databaseFile string) error {
+	// TODO(Delete File from database)
+	return nil
+}

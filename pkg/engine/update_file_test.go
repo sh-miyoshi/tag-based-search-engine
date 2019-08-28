@@ -12,7 +12,7 @@ func TestRegisterFile(t *testing.T) {
 		t.Errorf("Expect error when empty database file, but got nil")
 	}
 
-	dbFile = "unexists_file.csv"
+	dbFile = "unexists_db.json"
 	if err := RegisterFile("regiter_file.txt", dbFile); err == nil {
 		t.Errorf("Expect error when read unexists database file, but got nil")
 	}
