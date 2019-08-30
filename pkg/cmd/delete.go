@@ -40,7 +40,11 @@ var deleteFileCmd = &cobra.Command{
 	Short: "delete file to database",
 	Long:  `delete file to database`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Not Implemented yet")
+		if err := engine.DeleteFile(deleteFile, dbFile); err != nil {
+			fmt.Printf("Failed to delete file Error: %v", err)
+			return
+		}
+		fmt.Println("Succeeded")
 	},
 }
 

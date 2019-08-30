@@ -46,6 +46,39 @@ func RegisterFile(registerFile string, databaseFile string) error {
 
 // DeleteFile method delete a file to database if not exists
 func DeleteFile(deleteFile string, databaseFile string) error {
-	// TODO(Delete File from database)
+	if deleteFile == "" {
+		return fmt.Errorf("register file path is empty")
+	}
+
+	// Open DB File
+	raw, err := ioutil.ReadFile(databaseFile)
+	if err != nil {
+		return err
+	}
+
+	var data []object
+	json.Unmarshal(raw, &data)
+	result := []object{}
+	deleted := false
+
+	for _, d := range data {
+		if deleteFile == d.FilePath {
+			deleted = true
+		} else {
+			result = append(result, d)
+		}
+	}
+
+	if !deleted {
+		return fmt.Errorf("no such file")
+	}
+
+	// Update file
+	updated, err := json.MarshalIndent(result, "", "    ")
+	if err != nil {
+		return err
+	}
+
+	ioutil.WriteFile(databaseFile, updated, 0644)
 	return nil
 }
