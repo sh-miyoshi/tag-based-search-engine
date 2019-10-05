@@ -1,4 +1,4 @@
-module.exports = {
+module.exports = {// eslint-disable-line
   mode: 'spa',
   /*
    ** Headers of the page
@@ -61,7 +61,7 @@ module.exports = {
       if (ctx.isDev && ctx.isClient) {
         config.module.rules.push({
           enforce: 'pre',
-          test: /\.(vue)$/,
+          test: /\.(js|vue)$/,
           loader: 'eslint-loader',
           exclude: /(node_modules)/,
           options: {

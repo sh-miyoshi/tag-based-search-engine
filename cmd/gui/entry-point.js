@@ -1,3 +1,4 @@
+/* eslint-disable */
 const http = require('http')
 const path = require('path')
 const { Nuxt, Builder } = require('nuxt')
@@ -65,3 +66,4 @@ const newWin = () => {
 app.on('ready', newWin)
 app.on('window-all-closed', () => app.quit())
 app.on('activate', () => win === null && newWin())
+/* eslint-enable */
