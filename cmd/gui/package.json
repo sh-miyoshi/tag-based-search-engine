@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development electron .",
     "build": "cross-env NODE_ENV=production nuxt build && electron-builder",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "lint": "eslint --fix --ext .vue --ignore-path .gitignore .",
     "test": "jest"
   },
   "build": {
